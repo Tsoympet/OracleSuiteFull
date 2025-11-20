@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  api:
+    build: ./backend
+    env_file:
+      - ./config/dev.env
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  web:
+    build: ./frontend-web
+    volumes:
+      - ./frontend-web:/app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: oracle
+      POSTGRES_PASSWORD: oracle
+      POSTGRES_DB: oracle_suite
+    ports:
+      - "5432:5432"
